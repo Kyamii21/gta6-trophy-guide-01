@@ -3,118 +3,83 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Leonida Trophy Tracker — GTA VI PS5 Platinum Guide</title>
-<meta name="description" content="Offline tracker and cited guide for all 55 PlayStation 5 trophies in Grand Theft Auto VI: roadmap, missables, hidden trophies, export and import.">
+<title>Leonida Trophy Tracker — GTA VI Trophy Guide</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<a class="skip" href="#trophies">Skip to trophy list</a>
-
-<header class="hero">
-  <div class="hero-inner">
-    <p class="kicker">Grand Theft Auto VI · PlayStation 5 · Offline guide</p>
-    <h1>Leonida Trophy Tracker</h1>
-    <p class="sub">All 55 trophies — 1 Platinum, 2 Gold, 6 Silver, 46 Bronze. 28 are hidden on PSN until earned. Every guide below is written in original words with a Sources line. Tick trophies off as you earn them; progress is saved on this device.</p>
-    <div class="hero-stats" id="hero-stats" aria-live="polite"></div>
+<header id="site-header">
+  <div class="header-text">
+    <h1 id="app-title">Leonida Trophy Tracker</h1>
+    <p id="app-subtitle">Grand Theft Auto VI &middot; PlayStation 5 &middot; all 55 trophies: 1 platinum, 2 gold, 6 silver, 46 bronze &middot; 28 hidden</p>
+  </div>
+  <div id="progress-panel" aria-label="Overall progress">
+    <p id="progress-count">0 of 55 earned</p>
+    <div class="progress-track"><div id="progress-bar"></div></div>
+    <ul id="grade-progress"></ul>
   </div>
 </header>
 
-<main class="wrap">
-  <section class="panel progress-panel" aria-labelledby="progress-title">
-    <div class="panel-head">
-      <h2 id="progress-title">Your progress</h2>
-      <p class="muted" id="progress-line">Loading trophies…</p>
-    </div>
-    <div class="bar" role="progressbar" aria-label="Overall trophy progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="overall-bar">
-      <div class="bar-fill" id="overall-fill"></div>
-    </div>
-    <div class="grade-grid" id="grade-grid"></div>
-    <div class="progress-actions">
-      <button type="button" id="export-btn" class="btn btn-primary">Export progress (JSON)</button>
-      <label class="btn btn-ghost" for="import-file">Import progress</label>
-      <input id="import-file" type="file" accept="application/json,.json" class="visually-hidden">
-      <button type="button" id="reset-btn" class="btn btn-ghost btn-danger">Reset ticks</button>
-      <span class="muted small" id="save-note">Saved automatically in this browser. Export before clearing browser data.</span>
-    </div>
-  </section>
+<nav id="view-tabs" aria-label="Views">
+  <button id="tab-checklist" class="tab active" type="button">Checklist</button>
+  <button id="tab-roadmap" class="tab" type="button">Platinum roadmap</button>
+</nav>
 
-  <section class="panel" aria-labelledby="roadmap-title">
-    <div class="panel-head">
-      <h2 id="roadmap-title">Roadmap to Platinum — 6 stages, about 200 hours</h2>
-      <p class="muted">One playthrough, no online trophies, no difficulty trophies, no mission replay. Keep a manual save at the start of every chapter and one untouched save before the final mission. Cheats disable trophies and saving — keep them off this save.</p>
-    </div>
-    <div class="roadmap-grid" id="roadmap-grid"></div>
-    <div class="callout callout-warn">
-      <strong>Missable honesty check:</strong> launch-week sources flag only <strong>one potentially missable trophy</strong> — Positive Mental Attitude, whose Chapter 1 balcony meditation disappears after Chapter 1 and may or may not be required. Everything else, including the whole 100% checklist and all side-story finales, stays available in free roam. Two other warnings are <em>not</em> missable trophies: Race Against Yago is time-sensitive, and the Irredeemable Criminal Profile is permanent. They are labelled as such below, never dressed up as missables.
-    </div>
-  </section>
+<section id="controls" aria-label="Filters and progress tools">
+  <div id="kind-filters" role="group" aria-label="Filter by kind">
+    <button class="chip active" type="button" data-kind="all">All</button>
+    <button class="chip" type="button" data-kind="story">Story</button>
+    <button class="chip" type="button" data-kind="missable">Missable</button>
+    <button class="chip" type="button" data-kind="collectibles">Collectibles</button>
+    <button class="chip" type="button" data-kind="activities">Activities</button>
+    <button class="chip" type="button" data-kind="side">Side content</button>
+    <button class="chip" type="button" data-kind="economy">Economy</button>
+  </div>
+  <label class="control-label">Grade
+    <select id="grade-filter">
+      <option value="all">All grades</option>
+      <option value="platinum">Platinum</option>
+      <option value="gold">Gold</option>
+      <option value="silver">Silver</option>
+      <option value="bronze">Bronze</option>
+    </select>
+  </label>
+  <label class="control-label">Search
+    <input id="search-box" type="search" placeholder="Search trophies">
+  </label>
+  <label class="control-label spoiler-label">
+    <input id="spoiler-toggle" type="checkbox"> Spoiler shield: hide story trophies until earned
+  </label>
+  <button id="export-button" type="button">Export progress</button>
+  <label class="control-label import-label">Import progress
+    <input id="import-input" type="file" accept="application/json">
+  </label>
+</section>
 
-  <section class="panel controls-panel" aria-labelledby="controls-title">
-    <div class="panel-head">
-      <h2 id="controls-title">Find a trophy</h2>
-      <p class="muted" id="count-line"></p>
+<main id="checklist-view">
+  <div id="trophy-list" aria-label="Trophy checklist"></div>
+  <aside id="guide-panel" aria-label="Trophy guide detail">
+    <p id="guide-placeholder">Select a trophy to read its guide and sources.</p>
+    <div id="guide-content" hidden>
+      <h2 id="guide-title"></h2>
+      <p id="guide-meta"></p>
+      <p id="guide-description"></p>
+      <h3>Guide</h3>
+      <p id="guide-text"></p>
+      <p id="guide-missable" hidden></p>
+      <h3>Sources</h3>
+      <ul id="guide-sources"></ul>
     </div>
-    <div class="controls">
-      <div class="field grow">
-        <label for="search">Search name, mission or keyword</label>
-        <input id="search" type="search" placeholder="Try: vault, meditation, Chapter 3, Bret…" autocomplete="off">
-      </div>
-      <div class="field">
-        <label for="grade-select">Grade</label>
-        <select id="grade-select">
-          <option value="all">All grades</option>
-          <option value="platinum">Platinum</option>
-          <option value="gold">Gold</option>
-          <option value="silver">Silver</option>
-          <option value="bronze">Bronze</option>
-        </select>
-      </div>
-      <div class="field">
-        <label for="sort-select">Sort</label>
-        <select id="sort-select">
-          <option value="roadmap">Roadmap order</option>
-          <option value="grade">Grade (Platinum first)</option>
-          <option value="name">Name A–Z</option>
-          <option value="remaining">Remaining first</option>
-        </select>
-      </div>
-      <div class="field toggle-field">
-        <span id="spoiler-label">Spoiler shield</span>
-        <button type="button" id="spoiler-btn" class="btn btn-toggle" aria-pressed="false">Hide hidden trophies: Off</button>
-        <span class="muted small">When on, the 28 PSN-hidden trophies show as “Hidden trophy” until you tick them earned.</span>
-      </div>
-    </div>
-    <div class="chips" id="chips" role="group" aria-label="Category filters"></div>
-    <div class="controls-foot">
-      <button type="button" id="expand-btn" class="btn btn-ghost">Expand all guides</button>
-      <button type="button" id="collapse-btn" class="btn btn-ghost">Collapse guides</button>
-      <span class="muted small">Tip: each card shows Target, Stage and badges at a glance. Open “Guide” for steps and Sources.</span>
-    </div>
-  </section>
-
-  <section id="guide-hero" class="guide-hero" hidden aria-labelledby="guide-hero-title"></section>
-
-  <section aria-labelledby="trophies-title">
-    <h2 id="trophies-title" class="section-title">Trophies</h2>
-    <p class="muted" id="trophies-intro">Roadmap order by default. MISSABLE and HIDDEN badges are shown on every card. Tick “Earned” to save progress and reveal hidden names under the spoiler shield.</p>
-    <div id="trophies" class="trophy-list"></div>
-    <p class="empty" id="empty-state" hidden>No trophies match those filters. Clear the search or pick “All” above.</p>
-  </section>
-
-  <section class="panel" aria-labelledby="how-title">
-    <h2 id="how-title">How this guide handles sources and spoilers</h2>
-    <ul class="bullets">
-      <li><strong>Official list:</strong> names, descriptions and grades are the PS5 trophy list (55 total). The 28 hidden flags are the PSN hidden set — every story trophy plus side-story finales and small hidden feats — cross-checked across trophy databases, not just the story set.</li>
-      <li><strong>Cited guides:</strong> each trophy's steps carry a Sources line naming the guide or database behind its locations, counts and unlocks. A guide that only repeats the description earns nothing, so every card adds where, how many, or in what order.</li>
-      <li><strong>Unconfirmed means unconfirmed:</strong> Bad Luck, I Guess and Ten Pin had no verified trigger in launch-week sources. Their cards say so and offer only a labelled lead to test, never an invented solution.</li>
-      <li><strong>Spoiler shield:</strong> turn it on to hide the name and description of all 28 hidden trophies until earned — the same behaviour as the PSN list itself.</li>
-      <li><strong>Original text:</strong> all guide wording here is original. No game artwork, logos or copied guide text are used. This is an unofficial fan guide.</li>
-    </ul>
-  </section>
+  </aside>
 </main>
 
-<footer class="footer">
-  <p>Leonida Trophy Tracker — unofficial offline fan guide for Grand Theft Auto VI on PlayStation 5. Works without a network connection. Your ticks never leave this device unless you export them.</p>
+<section id="roadmap-view" hidden aria-label="Roadmap to the platinum">
+  <h2 id="roadmap-title">Roadmap to the platinum</h2>
+  <p id="roadmap-intro">Six stages, built from the official trophy descriptions: story first, then the choice-count watch, collectibles, activities, side content, and the endgame grind. Only one trophy is flagged missable, and it is flagged because its official description is about choices made inside story content.</p>
+  <div id="roadmap-stages"></div>
+</section>
+
+<footer id="site-footer">
+  <p>Official names, descriptions and grades as published by PlayStation via Exophase and PSNProfiles. Guides are this tracker's own words, written from those official descriptions and PSN progress targets. Works fully offline; progress is saved in your browser.</p>
 </footer>
 
 <script type="module" src="app.js"></script>
