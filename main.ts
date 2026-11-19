@@ -10,8 +10,8 @@
 // or JPEG screenshots of it in screenshots/ (the first by name is the cover; shots.json says which views this
 // starter's were taken of), and run it.
 //
-// v2 (Leonida Trophy Tracker): full tracker with per-grade progress, search, category filters, spoiler shield for
-// the 28 PSN-hidden trophies, a 6-stage roadmap, cited original guides for all 55 trophies, and JSON export/import.
+// Leonida Trophy Tracker build: app/ now carries the full guide and tracker (checklist, cited guides, roadmap,
+// spoiler shield), and screenshots/ holds its four renders. This entrypoint line is the tracker's own.
 //
 // Serve it locally with `node serve.ts`, then open http://localhost:8080.
 // Outside the grader's container, MAKEFUN_OUTPUT_DIR stands in for /output:
@@ -24,8 +24,6 @@ import { buildDossier } from './vendor/makefun-frontend.ts';
 
 const here = fileURLToPath(new URL('.', import.meta.url));
 const out = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
-
-// v2 ships 4 screenshots (cover, guide spotlight, roadmap, missable filter) in screenshots/.
 
 mkdirSync(out, { recursive: true });
 cpSync(join(here, 'app'), join(out, 'app'), { recursive: true });
