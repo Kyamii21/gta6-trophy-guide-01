@@ -1,5 +1,1 @@
-[
-  { "file": "1-checklist.jpg", "path": "/", "viewport": { "width": 1280, "height": 800 } },
-  { "file": "2-silver.jpg", "path": "/", "grade": "silver", "viewport": { "width": 1280, "height": 800 } },
-  { "file": "3-bronze.jpg", "path": "/", "grade": "bronze", "scroll": 1400, "viewport": { "width": 1280, "height": 800 } }
-]
+[{"file":"1-cover.jpg","path":"/?shot=cover","view":"Tracker cover: hero stats, overall and per-grade progress with export/import, start of 6-stage roadmap. Example progress 14 of 55.","viewport":{"height":1024,"width":1280}},{"file":"2-guide.jpg","path":"/?shot=guide&id=28","view":"Guide spotlight for Positive Mental Attitude (id 28) at large type with Target, missable window, full guide and Sources, above the trophy list.","viewport":{"height":1050,"width":1280}},{"file":"3-roadmap.jpg","path":"/?shot=roadmap","view":"Full 6-stage Platinum roadmap with per-stage trophy lists, counts and missable windows. Example progress 21 of 55.","viewport":{"height":1280,"width":1280}},{"file":"4-missable.jpg","path":"/?shot=missable","view":"Missable filter active (1 trophy) with honesty explainer and Positive Mental Attitude card expanded, showing MISSABLE badge, Target, guide and Sources.","viewport":{"height":1280,"width":1280}}]
