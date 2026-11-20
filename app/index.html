@@ -1,87 +1,157 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Leonida Trophy Tracker — GTA VI Trophy Guide</title>
+<title>Leonida Legend — GTA VI Trophy Guide &amp; Tracker</title>
+<meta name="description" content="Offline guide and tracker for all 55 PlayStation 5 trophies of Grand Theft Auto VI: cited guides, platinum roadmap, missable flags, spoiler shield, export and import.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header id="site-header">
-  <div class="header-text">
-    <h1 id="app-title">Leonida Trophy Tracker</h1>
-    <p id="app-subtitle">Grand Theft Auto VI &middot; PlayStation 5 &middot; all 55 trophies: 1 platinum, 2 gold, 6 silver, 46 bronze &middot; 28 hidden</p>
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark" aria-hidden="true">LL</div>
+    <div>
+      <h1>Leonida Legend</h1>
+      <p class="tagline">Grand Theft Auto VI — PS5 trophy guide &amp; tracker · 55 trophies · offline</p>
+    </div>
   </div>
-  <div id="progress-panel" aria-label="Overall progress">
-    <p id="progress-count">0 of 55 earned</p>
-    <div class="progress-track"><div id="progress-bar"></div></div>
-    <ul id="grade-progress"></ul>
+  <div class="top-actions">
+    <button id="btn-export" type="button">Export progress</button>
+    <label class="file-btn" for="file-import">Import progress</label>
+    <input id="file-import" type="file" accept="application/json,.json" hidden>
+    <button id="btn-reset" type="button" class="danger">Reset</button>
   </div>
 </header>
 
-<nav id="view-tabs" aria-label="Views">
-  <button id="tab-checklist" class="tab active" type="button">Checklist</button>
-  <button id="tab-roadmap" class="tab" type="button">Platinum roadmap</button>
+<section class="hero">
+  <div class="hero-main">
+    <div class="ring-wrap">
+      <svg class="ring" viewBox="0 0 120 120" role="img" aria-label="Overall trophy progress">
+        <circle class="ring-bg" cx="60" cy="60" r="52"></circle>
+        <circle id="ring-fg" class="ring-fg" cx="60" cy="60" r="52"></circle>
+      </svg>
+      <div class="ring-center">
+        <span id="stat-pct">0%</span>
+        <small id="stat-count">0 / 55 earned</small>
+      </div>
+    </div>
+    <div class="hero-text">
+      <h2>Road to the Platinum: <em>Vice Got a Price!</em></h2>
+      <p>Every guide on this page is written in our own words and cites at least two public sources — open any trophy to read the full guide, step list, tips and its Sources line. One trophy is flagged as potentially missable; the roadmap keeps you safe from it.</p>
+      <div class="hero-badges">
+        <span class="chip chip-plat">1 Platinum</span>
+        <span class="chip chip-gold">2 Gold</span>
+        <span class="chip chip-silver">6 Silver</span>
+        <span class="chip chip-bronze">46 Bronze</span>
+        <span class="chip chip-hidden">28 hidden</span>
+        <span class="chip chip-missable">1 potentially missable</span>
+      </div>
+    </div>
+  </div>
+  <div class="stat-grid" id="stat-grid" aria-label="Progress statistics"></div>
+</section>
+
+<nav class="viewtabs" aria-label="Views">
+  <button type="button" class="tab is-active" data-view="checklist">Tracker</button>
+  <button type="button" class="tab" data-view="guide">Trophy guide</button>
+  <button type="button" class="tab" data-view="roadmap">Platinum roadmap</button>
+  <button type="button" class="tab" data-view="missable">Missable watch</button>
 </nav>
 
-<section id="controls" aria-label="Filters and progress tools">
-  <div id="kind-filters" role="group" aria-label="Filter by kind">
-    <button class="chip active" type="button" data-kind="all">All</button>
-    <button class="chip" type="button" data-kind="story">Story</button>
-    <button class="chip" type="button" data-kind="missable">Missable</button>
-    <button class="chip" type="button" data-kind="collectibles">Collectibles</button>
-    <button class="chip" type="button" data-kind="activities">Activities</button>
-    <button class="chip" type="button" data-kind="side">Side content</button>
-    <button class="chip" type="button" data-kind="economy">Economy</button>
+<section class="controls" id="controls">
+  <div class="control">
+    <label for="f-search">Search</label>
+    <input id="f-search" type="search" placeholder="Name, description or guide text…" autocomplete="off">
   </div>
-  <label class="control-label">Grade
-    <select id="grade-filter">
+  <div class="control">
+    <label for="f-kind">Kind</label>
+    <select id="f-kind">
+      <option value="all">All kinds</option>
+      <option value="story">Story</option>
+      <option value="collectibles">Collectibles</option>
+      <option value="activities">Activities</option>
+      <option value="crime">Crime &amp; money</option>
+      <option value="exploration">Exploration</option>
+      <option value="completion">Completion</option>
+    </select>
+  </div>
+  <div class="control">
+    <label for="f-grade">Grade</label>
+    <select id="f-grade">
       <option value="all">All grades</option>
       <option value="platinum">Platinum</option>
       <option value="gold">Gold</option>
       <option value="silver">Silver</option>
       <option value="bronze">Bronze</option>
     </select>
-  </label>
-  <label class="control-label">Search
-    <input id="search-box" type="search" placeholder="Search trophies">
-  </label>
-  <label class="control-label spoiler-label">
-    <input id="spoiler-toggle" type="checkbox"> Spoiler shield: hide story trophies until earned
-  </label>
-  <button id="export-button" type="button">Export progress</button>
-  <label class="control-label import-label">Import progress
-    <input id="import-input" type="file" accept="application/json">
-  </label>
+  </div>
+  <div class="control">
+    <label for="f-status">Status</label>
+    <select id="f-status">
+      <option value="all">All</option>
+      <option value="earned">Earned</option>
+      <option value="unearned">Not yet earned</option>
+    </select>
+  </div>
+  <div class="control">
+    <label for="f-hidden">Hidden</label>
+    <select id="f-hidden">
+      <option value="all">All</option>
+      <option value="hidden">Hidden only (28)</option>
+      <option value="visible">Visible only (27)</option>
+    </select>
+  </div>
+  <div class="control toggles">
+    <label class="switch"><input id="f-missable" type="checkbox"> Missable only</label>
+    <label class="switch"><input id="f-shield" type="checkbox" checked> Spoiler shield</label>
+  </div>
 </section>
 
-<main id="checklist-view">
-  <div id="trophy-list" aria-label="Trophy checklist"></div>
-  <aside id="guide-panel" aria-label="Trophy guide detail">
-    <p id="guide-placeholder">Select a trophy to read its guide and sources.</p>
-    <div id="guide-content" hidden>
-      <h2 id="guide-title"></h2>
-      <p id="guide-meta"></p>
-      <p id="guide-description"></p>
-      <h3>Guide</h3>
-      <p id="guide-text"></p>
-      <p id="guide-missable" hidden></p>
-      <h3>Sources</h3>
-      <ul id="guide-sources"></ul>
+<main>
+  <section id="view-checklist" class="view">
+    <p class="result-line" id="result-line" role="status"></p>
+    <div id="trophy-grid" class="trophy-grid"></div>
+    <p id="empty-state" class="empty" hidden>No trophies match those filters. Try clearing the search or choosing “All”.</p>
+  </section>
+
+  <section id="view-guide" class="view" hidden>
+    <div class="guide-layout">
+      <aside class="guide-picker">
+        <label for="guide-select">Choose a trophy</label>
+        <select id="guide-select" size="12"></select>
+        <p class="picker-note">Guides are written in our own words. Every trophy cites at least two sources — see the Sources line on the right.</p>
+      </aside>
+      <article id="guide-detail" class="guide-detail" aria-live="polite"></article>
     </div>
-  </aside>
+  </section>
+
+  <section id="view-roadmap" class="view" hidden>
+    <h2 class="section-title">Platinum roadmap — six stages to <em>Vice Got a Price!</em></h2>
+    <p class="section-sub">One playthrough, no mission replay, cheats off. Keep manual saves at chapter boundaries. Stages are ordered so the single potentially-missable moment is handled in Stage 1, and the 100% grind lands last.</p>
+    <div id="roadmap-list" class="roadmap-list"></div>
+  </section>
+
+  <section id="view-missable" class="view" hidden>
+    <h2 class="section-title">Missable watch</h2>
+    <div class="missable-banner">
+      <h3>⚠ One potentially-missable trophy: Positive Mental Attitude</h3>
+      <p>In <strong>Chapter 1</strong>, the morning after <em>Down to Earth</em>, Lucia mentions meditating in the kitchen at Jason's house and walks to the balcony. Follow her and choose <strong>Accept</strong>. That moment disappears after Chapter 1. PowerPyx and GTABase both flag it as the only possibly-missable trophy moment; whether the trophy strictly requires it is still unconfirmed — do it anyway, then save.</p>
+      <p>Everything else can be earned after the story: free roam continues, there are no online trophies, and nothing on the 100% checklist is reported missable. <strong>Actions Speak Louder is not missable</strong> — it is a 500-action Criminal Profile counter that keeps rising in free roam; check it last.</p>
+      <p>Save discipline: 15 manual slots + 1 autosave, no mission replay. Keep a save at the start and end of every chapter, and never use cheats on a trophy run — they disable trophies and saving.</p>
+    </div>
+    <div id="missable-list" class="trophy-grid"></div>
+    <h3 class="section-title small">Hidden trophies (28) — hidden ≠ missable</h3>
+    <p class="section-sub">Hidden trophies stay covered in the PS5 list until earned, mostly to protect story names. With the spoiler shield on, this tracker covers them the same way. All 28 are earned through story progress or free-roam secrets — none is missable except the meditation watch above.</p>
+    <div id="hidden-list" class="trophy-grid"></div>
+  </section>
 </main>
 
-<section id="roadmap-view" hidden aria-label="Roadmap to the platinum">
-  <h2 id="roadmap-title">Roadmap to the platinum</h2>
-  <p id="roadmap-intro">Six stages, built from the official trophy descriptions: story first, then the choice-count watch, collectibles, activities, side content, and the endgame grind. Only one trophy is flagged missable, and it is flagged because its official description is about choices made inside story content.</p>
-  <div id="roadmap-stages"></div>
-</section>
-
-<footer id="site-footer">
-  <p>Official names, descriptions and grades as published by PlayStation via Exophase and PSNProfiles. Guides are this tracker's own words, written from those official descriptions and PSN progress targets. Works fully offline; progress is saved in your browser.</p>
+<footer class="footer">
+  <p>Leonida Legend is an unofficial fan-made guide. Trophy names, descriptions and grades are shown as PlayStation publishes them; all guide text is original and cites its sources per trophy. No Rockstar Games logos or artwork are used. Progress is stored only in your browser (localStorage) — export it to a file to keep a backup.</p>
+  <p class="footer-sources">Sources cited throughout: PowerPyx Trophy Guide &amp; Roadmap · GTABase Trophy Guide · GAMES.GG Trophy List. Hidden flags (28) cross-checked across five public lists on 20 Nov 2026.</p>
 </footer>
 
-<script type="module" src="app.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
